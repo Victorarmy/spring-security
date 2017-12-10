@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <h3 th:if="${registration}" th:text="${'Registration Complete'}"></h3><br/>
+
+    <a th:href="@{/registration}" th:text="REGISTER"></a><br/>
+    <a th:href="@{/user}" th:text="user"></a><br/>
+    <a th:href="@{/moderator}" th:text="moderator"></a><br/>
+    <a th:href="@{/admin}" th:text="admin"></a>
+
+    <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/logout}" th:method="post" >
+        <input th:type="submit" th:value="LOGOUT"/>
+    </form>
+</body>
+</html>
