@@ -20,14 +20,20 @@ public class WrongPassListener {
 
     @EventListener
     public void saveFailedLoginAttempt(AuthenticationFailureBadCredentialsEvent badCredentialsEvent) {
+
         String userEmail = badCredentialsEvent
                 .getAuthentication()
                 .getPrincipal().toString();
-
         User userByEmail = userRepository.findByEmail(userEmail);
-        validateUserAttempts(userByEmail);
 
-        userRepository.save(userByEmail);
+        if(isInDB(userByEmail)) {
+            validateUserAttempts(userByEmail);
+            userRepository.save(userByEmail);
+        }
+    }
+
+    private boolean isInDB(User userByEmail) {
+        return userByEmail != null;
     }
 
     private void validateUserAttempts(User userByEmail) {
